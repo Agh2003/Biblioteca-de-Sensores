@@ -1,6 +1,6 @@
 import time
 from smbus2 import SMBus
-from configuracao import Configuracao  # importa a classe de configuração
+from configuracao import Configuracao 
 
 # ===== ENDEREÇOS =====
 I2C_DEVICE = 1            # Número do barramento I2C (/dev/i2c-1)
@@ -8,7 +8,7 @@ VL53L0X_ADDR = 0x29       # Endereço do sensor VL53L0X
 TCA9548A_ADDR = 0x70      # Endereço do multiplexador TCA9548A
 
 class VL53L0X:
-    """Classe para controle do sensor de distância VL53L0X."""
+    """Classe para controle do sensor de distância VL53L0X"""
     def __init__(self, canal_mux=0):
         self.bus = SMBus(I2C_DEVICE)
         self.canal_mux = canal_mux
@@ -24,7 +24,7 @@ class VL53L0X:
 
     # ----- MULTIPLEXADOR -----
     def _selecionar_canal_mux(self):
-        """Seleciona o canal ativo no TCA9548A."""
+        """Seleciona o canal ativo no TCA9548A"""
         self.bus.write_byte(TCA9548A_ADDR, 1 << self.canal_mux)
 
     # ----- MÉTODOS I2C -----
@@ -41,7 +41,7 @@ class VL53L0X:
 
     # ----- LEITURA DE DISTÂNCIA -----
     def ler_distancia(self):
-        """Lê a distância em mm, aplicando o offset de calibração."""
+        """Lê a distância em mm, aplicando o offset de calibração"""
         self._selecionar_canal_mux()
         self._write_byte(0x00, 0x01)
 
@@ -54,7 +54,7 @@ class VL53L0X:
 
     # ----- CALIBRAÇÃO -----
     def calibrar(self, distancia_real_mm, amostras=100):
-        """Calibra o sensor para uma distância real conhecida e salva o offset."""
+        """Calibra o sensor para uma distância real conhecida e salva o offset"""
         print(f"Coloque um objeto a {distancia_real_mm} mm do sensor.")
         input("Pressione ENTER para iniciar a calibração...")
 
@@ -75,24 +75,24 @@ class VL53L0X:
         self.bus.close()
 
 
-# ===== TESTE =====
-if __name__ == "__main__":
-    sensor = VL53L0X(canal_mux=0)
-    # sensor.calibrar(100) #caso eu queira fazer uma nova calibracao, descomentar
+# # ===== TESTE =====
+# if __name__ == "__main__":
+#     sensor = VL53L0X(canal_mux=0)
+#     # sensor.calibrar(100) #caso eu queira fazer uma nova calibracao, descomentar
 
-    try:
-        # Verifica se há calibração salva
-        if sensor.config.obtem("offset") is None:
-            print("Nenhuma calibração encontrada, iniciando calibração...")
-            sensor.calibrar(100)  # aqui você define a distância real usada para calibrar
-        else:
-            print(f"Calibração carregada: offset = {sensor.offset} mm")
+#     try:
+#         # Verifica se há calibração salva
+#         if sensor.config.obtem("offset") is None:
+#             print("Nenhuma calibração encontrada, iniciando calibração...")
+#             sensor.calibrar(100)  # aqui você define a distância real usada para calibrar
+#         else:
+#             print(f"Calibração carregada: offset = {sensor.offset} mm")
 
-        while True:
-            print(f"Distância medida: {sensor.ler_distancia()} mm")
-            time.sleep(0.5)
+#         while True:
+#             print(f"Distância medida: {sensor.ler_distancia()} mm")
+#             time.sleep(0.5)
 
-    except KeyboardInterrupt:
-        print("Encerrando leitura...")
-    finally:
-        sensor.close()
+#     except KeyboardInterrupt:
+#         print("Encerrando leitura...")
+#     finally:
+#         sensor.close()
