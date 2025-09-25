@@ -1,5 +1,5 @@
 # VL53L0X
-Classe para controle do sensor de distância **VL53L0X** utilizando a Banana Pi M4 Zero, via barramento I2C, com suporte ao multiplexador **TCA9548A**.  
+Classe para controle do sensor de distância `vl53l0x` utilizando a Banana Pi M4 Zero, via barramento I2C, com suporte ao multiplexador **TCA9548A**.  
 Permite inicialização do sensor, leitura da distância em milímetros, calibração para ajuste de offset e persistência desse offset para uso posterior.
 
 ---
