@@ -1,14 +1,14 @@
 import time
 
 class MG90S:
-    def __init__(self, pca, channel, min_us=500, max_us=2500, freq=50):
+    def __init__(self, pca, channel, min_ms=500, max_ms=2500, freq=50):
         """
         Inicializa o servo MG90S
         """
         self.pca = pca              # instância de PCA9685 que controla o PWM
         self.channel = channel      # Canal do PCA9685 onde o servo está conectado
-        self.min_us = min_us        # Pulso mínimo (em us) correspondente ao ângulo 0°
-        self.max_us = max_us        # Pulso máximo (em us) correspondente ao ângulo 180°
+        self.min_ms = min_ms        # Pulso mínimo (em ms) correspondente ao ângulo 0°
+        self.max_ms = max_ms        # Pulso máximo (em ms) correspondente ao ângulo 180°
         self.freq = freq            # Frequência de operação do PWM (50 Hz)
 
         # Configura a frequência do PCA9685 (necessário para que os cálculos de duty cycle fiquem corretos)
@@ -20,9 +20,9 @@ class MG90S:
         Calcula o tempo de pulso necessário e divide pelo período para obter a fração
         """
         angle = max(0, min(180, angle))  # Garante que o ângulo esteja entre 0° e 180°
-        pulse_us = self.min_us + (self.max_us - self.min_us) * (angle / 180.0)  # Calcula pulso em us
-        period_us = 1_000_000 / self.freq  # Calcula período em us (ex.: 50 Hz → 20000 us)
-        duty_cycle = pulse_us / period_us  # Fração do período que o sinal ficará em nível alto
+        pulse_ms = self.min_ms + (self.max_ms - self.min_ms) * (angle / 180.0)  # Calcula pulso em ms
+        period_ms = 1_000_000 / self.freq  # Calcula período em ms (ex.: 50 Hz → 20000 ms)
+        duty_cycle = pulse_ms / period_ms  # Fração do período que o sinal ficará em nível alto
         return duty_cycle
 
     def set_angle(self, angle):
