@@ -1,4 +1,4 @@
-# Botao
+# Botõess
 Classe para controle de botões conectados na Banana Pi M4 Zero via GPIO, utilizando a biblioteca `gpiod`.  
 
 ---
@@ -39,7 +39,7 @@ Classe para controle de botões conectados na Banana Pi M4 Zero via GPIO, utiliz
 Construtor da classe. Inicializa o driver dos botões para as portas especificadas.
 
 - **Parâmetros**:
-    - `portas` (tuple | list): portas a serem utilizadas (ex.: `(Porta.P2, Porta.P4)`).
+    - `portas` (tuple | list): portas a serem utilizadas.
 
 - **Comportamento**:
     - Cria um dicionário interno `botoes`, onde cada chave é uma porta e o valor é o objeto retornado por `gpiod.request_lines` configurado como entrada (`Direction.INPUT`).
