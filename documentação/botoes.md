@@ -62,13 +62,6 @@ Lê o estado do botão de uma porta específica.
 
 ---
 
-## Detalhes
-- A classe utiliza `gpiod.request_lines` para configurar as portas como entradas no momento da inicialização.
-- A leitura retorna valores baseados no estado elétrico do pino: ativo (pressionado) ou inativo (liberado).
-- É possível utilizar múltiplas portas simultaneamente, bastando incluí-las na tupla passada no construtor.
-
----
-
 ## Exemplo
 
 ```python
