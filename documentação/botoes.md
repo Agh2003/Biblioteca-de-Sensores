@@ -1,4 +1,4 @@
-# Botõess
+# Botões
 Classe para controle de botões conectados na Banana Pi M4 Zero via GPIO, utilizando a biblioteca `gpiod`.  
 
 ---
