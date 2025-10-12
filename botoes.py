@@ -40,18 +40,18 @@ class Botao:
         estado = self.botoes[porta].get_value(porta)
         return estado == self.APERTADO  # True se pressionado, False se liberado
 
-# # ===== TESTE =====
-# if __name__ == "__main__":
-#     botoes = Botao(portas=(Porta.P2, Porta.P4))  # Inicializa dois botões (P2 e P4)
+# ===== TESTE =====
+if __name__ == "__main__":
+    botoes = Botao(portas=(Porta.P2, Porta.P4))  # Inicializa dois botões (P2 e P4)
 
-#     print("Pressione Ctrl+C para sair.")
-#     try:
-#         while True:
-#             estado_p2 = "PRESSIONADO" if botoes.ler_estado(Porta.P2) else "LIBERADO"
-#             estado_p4 = "PRESSIONADO" if botoes.ler_estado(Porta.P4) else "LIBERADO"
+    print("Pressione Ctrl+C para sair.")
+    try:
+        while True:
+            estado_p2 = "PRESSIONADO" if botoes.ler_estado(Porta.P2) else "LIBERADO"
+            estado_p4 = "PRESSIONADO" if botoes.ler_estado(Porta.P4) else "LIBERADO"
 
-#             print(f"[P2] {estado_p2} | [P4] {estado_p4}")
-#             time.sleep(0.1)
+            print(f"[P2] {estado_p2} | [P4] {estado_p4}")
+            time.sleep(0.1)
 
-#     except KeyboardInterrupt:
-#         print("\nEncerrando leitura dos botões.")
+    except KeyboardInterrupt:
+        print("\nEncerrando leitura dos botões.")
