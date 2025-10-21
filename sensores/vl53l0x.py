@@ -1,6 +1,6 @@
 import time
 from smbus2 import SMBus
-from configuracao import Configuracao 
+from sensores.configuracao import Configuracao 
 
 # ===== ENDEREÇOS =====
 I2C_DEVICE = 1            # Número do barramento I2C (/dev/i2c-1)
