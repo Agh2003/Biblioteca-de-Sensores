@@ -32,4 +32,4 @@ class MG90S:
         """
         duty = self.angle_to_duty_cycle(angle)              # Converte ângulo para duty cycle
         self.pca.set_pwm_duty_cycle(self.channel, duty)     # Aplica duty cycle no canal correto
-        time.sleep(0.3)
+        time.sleep(0.27)
