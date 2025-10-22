@@ -1,8 +1,8 @@
 import time
-from portas import Porta
-from tcs34725 import ColorSensor
-from vl53l0x import VL53L0X
-from botoes import Botao
+from sensores import Porta
+from sensores import TCS34725 as ColorSensor
+from sensores import VL53L0X
+from sensores import Botao
 
 
 def main():
