@@ -1,7 +1,7 @@
 import time
 import gpiod
 from gpiod.line import Direction, Value
-from portas import Porta  
+from sensores.portas import Porta  
 
 class Botao:
     """
