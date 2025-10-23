@@ -6,7 +6,7 @@ Uma biblioteca Python completa para controle de sensores e dispositivos eletrôn
 
 A biblioteca inclui documentação completa gerada com Sphinx. Para visualizá-la, siga estes passos:
 
-### Método 1: Script Automático (Recomendado)
+### Script Automático
 
 ```bash
 # Torne o script executável (apenas na primeira vez)
