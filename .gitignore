@@ -1,3 +1,6 @@
 /__pycache__
 /exemplo/__pycache__
 /sensores/__pycache__
+/docs/build/
+/docs/source
+/.venv
