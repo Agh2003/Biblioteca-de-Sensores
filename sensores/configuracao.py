@@ -15,11 +15,11 @@ class Configuracao:
         self.salva()
 
     def salva(self):
-        with open(self.nomeArquivo, 'wb') as f:
+        with open('data/' + self.nomeArquivo, 'wb') as f:
             pickle.dump(self.config, f)
 
     def carrega(self):
-        with open(self.nomeArquivo, 'rb') as f:
+        with open('data/' + self.nomeArquivo, 'rb') as f:
             self.config = pickle.load(f)
 
     def obtem(self, chave): # le um valor salvo de configuracao
