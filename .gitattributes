@@ -1,0 +1,16 @@
+# Arquivos de texto
+*.py text
+*.rst text
+*.md text
+*.txt text
+*.sh text
+
+# Arquivos binários
+*.pkl binary
+*.pyc binary
+*.pyo binary
+
+# Arquivos de configuração
+.gitignore text
+.gitattributes text
+requirements.txt text

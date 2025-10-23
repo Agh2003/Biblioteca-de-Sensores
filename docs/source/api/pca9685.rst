@@ -1,0 +1,59 @@
+PCA9685 - Controlador PWM
+=========================
+
+O módulo ``PCA9685`` fornece controle para múltiplos canais PWM através do chip PCA9685.
+
+.. autoclass:: sensores.pca9685.PCA9685
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Exemplo de Uso
+--------------
+
+.. code-block:: python
+
+   from sensores import PCA9685, Porta
+   
+   # Inicializar controlador PWM
+   pwm = PCA9685(mux_channel=Porta.I2C1)
+   
+   # Configurar canal 0 com duty cycle de 50%
+   pwm.set_pwm(0, 0, 2048)  # 50% de 4096
+   
+   # Configurar canal 1 com duty cycle de 25%
+   pwm.set_pwm(1, 0, 1024)  # 25% de 4096
+   
+   # Fechar conexão
+   pwm.close()
+
+Métodos Principais
+------------------
+
+.. method:: set_pwm(canal, on, off)
+   :noindex:
+
+   Configura o PWM de um canal específico.
+   
+   :param canal: Número do canal (0-15)
+   :type canal: int
+   :param on: Valor de início do pulso (0-4095)
+   :type on: int
+   :param off: Valor de fim do pulso (0-4095)
+   :type off: int
+
+.. method:: set_frequency(freq)
+   :noindex:
+
+   Configura a frequência PWM.
+   
+   :param freq: Frequência em Hz
+   :type freq: float
+
+Notas Técnicas
+--------------
+
+* **Endereço I2C**: 0x40
+* **Canais**: 16 canais PWM
+* **Resolução**: 12 bits (0-4095)
+* **Frequência**: Configurável (24Hz a 1526Hz)

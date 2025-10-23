@@ -1,0 +1,106 @@
+TCS34725 - Sensor de Cor RGB
+============================
+
+O módulo ``TCS34725`` fornece uma interface para o sensor de cor RGB TCS34725, permitindo leitura de valores RGB e detecção de cores.
+
+.. autoclass:: sensores.tcs34725.TCS34725
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Exemplo de Uso
+--------------
+
+.. code-block:: python
+
+   from sensores import TCS34725, Porta
+   
+   # Inicializar sensor
+   sensor = TCS34725(mux_channel=Porta.I2C1)
+   
+   # Ler valores RGB
+   r, g, b, c = sensor.read_colors()
+   print(f"R={r}, G={g}, B={b}, Clear={c}")
+   
+   # Obter nome da cor
+   nome_cor = sensor.get_color_name()
+   print(f"Cor detectada: {nome_cor}")
+   
+   # Fechar conexão
+   sensor.close()
+
+Calibração
+----------
+
+Para obter leituras precisas de cor, é necessário calibrar o sensor:
+
+.. code-block:: python
+
+   # Calibrar para cor preta
+   sensor.calibrar_preto()
+   
+   # Calibrar para cor branca
+   sensor.calibrar_branco()
+   
+   # Verificar se está calibrado
+   if sensor.esta_calibrado():
+       print("Sensor calibrado com sucesso!")
+
+Métodos Principais
+------------------
+
+.. method:: read_colors()
+   :noindex:
+
+   Lê os valores RGB do sensor.
+   
+   :returns: Tupla (r, g, b, c) com valores de 0-255
+   :rtype: tuple
+
+.. method:: get_color_name()
+   :noindex:
+
+   Retorna o nome da cor detectada baseado nos valores RGB.
+   
+   :returns: Nome da cor em português
+   :rtype: str
+
+.. method:: calibrar_preto()
+   :noindex:
+
+   Calibra o sensor para cor preta (valores mínimos).
+
+.. method:: calibrar_branco()
+   :noindex:
+
+   Calibra o sensor para cor branca (valores máximos).
+
+.. method:: esta_calibrado()
+   :noindex:
+
+   Verifica se o sensor foi calibrado.
+   
+   :returns: True se calibrado, False caso contrário
+   :rtype: bool
+
+Configuração Avançada
+---------------------
+
+O sensor permite configuração de tempo de integração e ganho:
+
+.. code-block:: python
+
+   # Configurar tempo de integração (em ms)
+   sensor._tempo_integracao(50)  # 50ms
+   
+   # Configurar ganho
+   sensor._ganho(16)  # 16x ganho
+
+Notas Técnicas
+--------------
+
+* **Endereço I2C**: 0x29
+* **Resolução**: 16 bits por canal
+* **Tempo de integração**: Configurável (2.4ms a 700ms)
+* **Ganho**: 1x, 4x, 16x, 60x
+* **Calibração**: Persistente em arquivo .pkl
