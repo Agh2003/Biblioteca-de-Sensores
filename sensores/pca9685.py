@@ -1,12 +1,11 @@
+from sensores.i2cmodule import I2CModule
 import smbus2
 import time
 
 # ===== ENDEREÇOS E CONFIGURAÇÕES =====
-I2C_DEVICE = 1           # Número do barramento I2C (/dev/i2c-1)
-TCA9548A_ADDR = 0x70     # Endereço I2C do multiplexador TCA9548A
 PCA9685_ADDR = 0x40      # Endereço I2C do módulo PCA9685 (padrão)
 
-class PCA9685:
+class PCA9685(I2CModule):
     # Registradores importantes do PCA9685
     __MODE1 = 0x00        # Registrador de controle principal (MODE1)
     __PRESCALE = 0xFE     # Registrador para configurar frequência PWM
@@ -16,22 +15,8 @@ class PCA9685:
         """
         Inicializa o PCA9685
         """
-        self.bus = smbus2.SMBus(I2C_DEVICE)  # Abre comunicação I2C
-        self.address = PCA9685_ADDR          # Endereço do PCA9685
-        self.mux_address = TCA9548A_ADDR     # Endereço do MUX
-        self.mux_channel = mux_channel       # Canal ativo do MUX
-
-        self.select_mux_channel(mux_channel) # Ativa canal no MUX
+        super().__init__(PCA9685_ADDR, mux_channel)
         self.reset()                         # Reseta PCA9685 para estado padrão
-
-    def select_mux_channel(self, channel):
-        """
-        Ativa apenas o canal especificado no multiplexador TCA9548A
-        """
-        if not (0 <= channel <= 7):
-            raise ValueError("Canal do multiplexador deve estar entre 0 e 7")
-        self.bus.write_byte(self.mux_address, 1 << channel)
-        time.sleep(0.01)  # Pausa para garantir que o canal foi comutado corretamente
 
     def reset(self):
         """
