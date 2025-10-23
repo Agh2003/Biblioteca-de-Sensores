@@ -20,7 +20,6 @@ chmod +x build_docs.sh
 
 Após gerar a documentação, você pode visualizá-la de duas formas:
 
-#### Opção 1: Servidor Local (Recomendado)
 ```bash
 cd docs/build
 python3 -m http.server 8000
