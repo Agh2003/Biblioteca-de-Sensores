@@ -10,6 +10,7 @@ class MG90S:
         self.min_ms = min_ms        # Pulso mínimo (em ms) correspondente ao ângulo 0°
         self.max_ms = max_ms        # Pulso máximo (em ms) correspondente ao ângulo 180°
         self.freq = freq            # Frequência de operação do PWM (50 Hz)
+        self._last_angle = None      # Armazena o último ângulo definido
 
         # Configura a frequência do PCA9685 (necessário para que os cálculos de duty cycle fiquem corretos)
         self.pca.set_pwm_freq(freq)
@@ -32,4 +33,9 @@ class MG90S:
         """
         duty = self.angle_to_duty_cycle(angle)              # Converte ângulo para duty cycle
         self.pca.set_pwm_duty_cycle(self.channel, duty)     # Aplica duty cycle no canal correto
-        time.sleep(0.3)
+        time.sleep(0.27)
+
+    @property
+    def last_angle(self):
+        """Retorna o último ângulo definido"""
+        return self._last_angle

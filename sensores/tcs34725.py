@@ -1,21 +1,19 @@
 import time
+from sensores.i2cmodule import I2CModule
 from smbus2 import SMBus
-from configuracao import Configuracao
+from sensores.configuracao import Configuracao
 
 # ===== ENDEREÇOS =====
-I2C_DEVICE = 1            # Número do barramento I2C (/dev/i2c-1)
-TCA9548A_ADDR = 0x70      # Endereço do multiplexador TCA9548A
 TCS34725_ADDR = 0x29      # Endereço I2C do sensor TCS34725
 COMMAND_BIT = 0x80        # Bit de comando para acessar os registradores do sensor
 
 
-class TCS34725:
+class TCS34725(I2CModule):
     def __init__(self, canal_mux, chave_sensor: str = "sensor_tcs34725"):
         """
         Inicializa o sensor TCS34725:
         """
-        self.bus = SMBus(I2C_DEVICE)            # Abre comunicação I2C
-        self._selecionar_canal_mux(canal_mux)   # Seleciona o canal ativo no MUX
+        super().__init__(TCS34725_ADDR, canal_mux)
         self._habilitar_sensor()                # Liga o sensor
         self._tempo_integracao(24)              # Tempo de integração = 24 ms
         self._ganho(4)                          # Ganho = 4x (valor padrão)
@@ -30,19 +28,11 @@ class TCS34725:
         self.valores_min = self.config.obtem(self.CHAVE_PRETO)
         self.valores_max = self.config.obtem(self.CHAVE_BRANCO)
 
-    # ---------------- MULTIPLEXADOR ----------------
-    def _selecionar_canal_mux(self, canal):
-        """Ativa apenas o canal especificado no multiplexador TCA9548A"""
-        self.bus.write_byte(TCA9548A_ADDR, 1 << canal)
 
     # ---------------- CONFIGURAÇÃO DO SENSOR ----------------
     def _write8(self, reg, valor):
         """Escreve 1 byte no registrador indicado do TCS34725"""
         self.bus.write_byte_data(TCS34725_ADDR, COMMAND_BIT | reg, valor)
-
-    def _read8(self, reg):
-        """Lê 1 byte de um registrador do TCS34725"""
-        return self.bus.read_byte_data(TCS34725_ADDR, COMMAND_BIT | reg)
 
     def _read16(self, reg):
         """Lê 2 bytes (word) de um registrador do TCS34725 e combina em inteiro de 16 bits"""

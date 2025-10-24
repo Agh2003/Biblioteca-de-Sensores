@@ -1,31 +1,23 @@
 import time
 from smbus2 import SMBus
-from configuracao import Configuracao 
+from sensores.configuracao import Configuracao 
+from sensores.i2cmodule import I2CModule
 
 # ===== ENDEREÇOS =====
-I2C_DEVICE = 1            # Número do barramento I2C (/dev/i2c-1)
 VL53L0X_ADDR = 0x29       # Endereço do sensor VL53L0X
-TCA9548A_ADDR = 0x70      # Endereço do multiplexador TCA9548A
 
-class VL53L0X:
+class VL53L0X(I2CModule):
     """Classe para controle do sensor de distância VL53L0X"""
     def __init__(self, canal_mux=0):
-        self.bus = SMBus(I2C_DEVICE)
-        self.canal_mux = canal_mux
+        super().__init__(VL53L0X_ADDR, canal_mux)
 
         # Gerencia o arquivo de configuração para salvar offset
         self.config = Configuracao("calibracao_vl53l0x")
         self.offset = self.config.obtem("offset") or 0  # Carrega offset salvo, se existir
 
-        self._selecionar_canal_mux()
         model_id = self._read_byte(0xC0)
         if model_id != 0xEE:
             raise Exception(f"VL53L0X não encontrado (ID lido: {hex(model_id)})")
-
-    # ----- MULTIPLEXADOR -----
-    def _selecionar_canal_mux(self):
-        """Seleciona o canal ativo no TCA9548A"""
-        self.bus.write_byte(TCA9548A_ADDR, 1 << self.canal_mux)
 
     # ----- MÉTODOS I2C -----
     def _read_byte(self, reg):
