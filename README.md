@@ -18,7 +18,7 @@ chmod +x build_docs.sh
 
 ### Visualizando a Documentação
 
-Após gerar a documentação, você pode visualizá-la de duas formas:
+Após gerar a documentação, você pode visualizá-la desta forma:
 
 ```bash
 cd docs/build
